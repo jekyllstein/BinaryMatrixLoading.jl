@@ -1,3 +1,4 @@
+using BinaryMatrixLoading
 using Test
 using Random
 

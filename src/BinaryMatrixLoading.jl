@@ -1,7 +1,9 @@
 module BinaryMatrixLoading
 
 """
+```julia
 write_matrix(input::Matrix{Float32}, filename::AbstractString, overwrite::Bool = false)
+```
 
 Write a Float32 matrix in binary representation to file.  
 There is a leading set of integers which will help the read function 
@@ -33,7 +35,9 @@ function write_matrix(input::Matrix{Float32}, filename::AbstractString, overwrit
 end
 
 """
-read_bin_matrix(filename::AbstractString, printdims::Bool = false)
+```julia
+M::Matrix{Float32} = read_bin_matrix(filename::AbstractString, printdims::Bool = false)
+```
 
 Read a Float32 matrix written to file generated with `write_matrix`.
 
