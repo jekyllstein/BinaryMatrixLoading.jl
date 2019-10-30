@@ -1,0 +1,4 @@
+name = "BinaryMatrixLoading"
+uuid = "dca08610-faab-11e9-3b61-a321b4d694da"
+authors = ["Jason Eckstein <jekyllstein@gmail.com>"]
+version = "0.1.0"
