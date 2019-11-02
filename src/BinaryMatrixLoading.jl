@@ -1,19 +1,20 @@
 module BinaryMatrixLoading
 
 """
-```julia
-write_matrix(input::Matrix{Float32}, filename::AbstractString, overwrite::Bool = false)
-```
+	write_matrix(input::Matrix{Float32}, filename::AbstractString, overwrite::Bool = false)
 
 Write a Float32 matrix in binary representation to file.  
+
 There is a leading set of integers which will help the read function 
 determine how to reconstruct the array.  The encoding is as follows: 
-first value N indicates how many rows are in the array.  
-The second value M indicates how many columns are in the array.  
-All of the following lines are the data.
+- First value N indicates how many rows are in the array.  
+- The second value M indicates how many columns are in the array.  
+- All of the following lines are the data.
 
-If the filename exists already then the third argument must be set to 
-`true` or the call will result in an error.
+!!! note
+    If the filename exists already then the third argument must be set to `true` 
+    or the call will result in an error.
+
 
 """
 function write_matrix(input::Matrix{Float32}, filename::AbstractString, overwrite::Bool = false)
@@ -35,18 +36,17 @@ function write_matrix(input::Matrix{Float32}, filename::AbstractString, overwrit
 end
 
 """
-```julia
-M::Matrix{Float32} = read_bin_matrix(filename::AbstractString, printdims::Bool = false)
-```
+	M::Matrix{Float32} = read_bin_matrix(filename::AbstractString, printdims::Bool = false)
 
 Read a Float32 matrix written to file generated with `write_matrix`.
 
-e.g. the following test should pass
-```julia
-input = rand(Float32, 10, 10)
-write_matrix(input, "test.bin")
-input2 = read_bin_matrix("test.bin")
-@assert input == input2
+# Examples
+```julia-repl
+julia> using BinaryMatrixLoading
+julia> input = rand(Float32, 10, 10);
+julia> write_matrix(input, "test.bin")
+julia> input2 = read_bin_matrix("test.bin");
+julia> @assert input == input2
 ```
 """
 function read_bin_matrix(filename::AbstractString, printdims::Bool = false)
