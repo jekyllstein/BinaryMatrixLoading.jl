@@ -59,6 +59,56 @@ function read_bin_matrix(filename::AbstractString, printdims::Bool = false)
 	out = read!(f, Matrix{Float32}(undef, n, m))
 end
 
-export write_matrix, read_bin_matrix
+"""
+	(n::Int64, m::Int64) = read_bin_matrix_dims(filename::AbstractString, printdims::Bool = false)
+
+Read the dimensions Float32 matrix written to file generated with `write_matrix`.
+
+# Examples
+```julia-repl
+julia> using BinaryMatrixLoading
+julia> input = rand(Float32, 10, 10);
+julia> write_matrix(input, "test.bin")
+julia> (n, m) = read_bin_matrix_dims("test.bin");
+julia> @assert size(input) == (n, m)
+```
+"""
+function read_bin_matrix_dims(filename::AbstractString)
+	#read array in binary form from a file.  
+	f = open(filename)
+	#get length of params array
+	n = read(f, Int64)
+	m = read(f, Int64)
+	(n, m)
+end
+
+"""
+	v::Vector{Float64} = read_bin_matrix_col(filename::AbstractString, col::Int64, printdims::Bool = false)
+
+Read column col from a Float32 matrix written to file generated with `write_matrix`.
+
+# Examples
+```julia-repl
+julia> using BinaryMatrixLoading
+julia> input = rand(Float32, 10, 10);
+julia> write_matrix(input, "test.bin")
+julia> v = read_bin_matrix_col("test.bin", 5);
+julia> @assert v == input[:, 5]
+```
+"""
+function read_bin_matrix_col(filename::AbstractString, col::Int64, printdims::Bool = false)
+	#read array in binary form from a file.  
+	f = open(filename)
+	#get length of params array
+	n = read(f, Int64)
+	m = read(f, Int64)
+	printdims && println("Got the following array dimensions: $n rows and $m columns")
+	
+	nbytes = (col-1)*n*4
+	skip(f, nbytes) 
+	v = read!(f, Vector{Float32}(undef, n))
+end
+
+export write_matrix, read_bin_matrix, read_bin_matrix_dims, read_bin_matrix_col
 
 end # module
